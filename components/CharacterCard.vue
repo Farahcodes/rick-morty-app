@@ -19,16 +19,31 @@
           loading="lazy"
         />
       </div>
-      <div class="flex-1 space-y-1.5 text-sm">
+      <div class="flex-1 space-y-1.5 text-sm overflow-hidden">
         <p>
           <span class="font-medium text-gray-700 dark:text-gray-300">Status:</span>
           <UBadge :color="statusColor" variant="subtle" size="xs" class="ml-1">{{ character.status }}</UBadge>
         </p>
-        <p><span class="font-medium text-gray-700 dark:text-gray-300">Species:</span> {{ character.species }}</p>
-        <p><span class="font-medium text-gray-700 dark:text-gray-300">Gender:</span> {{ character.gender }}</p>
-        <p v-if="character.type"><span class="font-medium text-gray-700 dark:text-gray-300">Type:</span> {{ character.type }}</p>
-        <p><span class="font-medium text-gray-700 dark:text-gray-300">Origin:</span> {{ character.origin?.name }}</p>
-        <p class="truncate" :title="character.location?.name"><span class="font-medium text-gray-700 dark:text-gray-300">Location:</span> {{ character.location?.name }}</p>
+        <p class="flex">
+          <span class="font-medium text-gray-700 dark:text-gray-300 flex-shrink-0">Species:</span>
+          <span class="truncate ml-1" :title="character.species">{{ character.species }}</span>
+        </p>
+        <p class="flex">
+          <span class="font-medium text-gray-700 dark:text-gray-300 flex-shrink-0">Gender:</span>
+          <span class="truncate ml-1" :title="character.gender">{{ character.gender }}</span>
+        </p>
+        <p v-if="character.type" class="flex">
+          <span class="font-medium text-gray-700 dark:text-gray-300 flex-shrink-0">Type:</span>
+          <span class="truncate ml-1" :title="character.type">{{ character.type }}</span>
+        </p>
+        <p class="flex">
+          <span class="font-medium text-gray-700 dark:text-gray-300 flex-shrink-0">Origin:</span>
+          <span class="truncate ml-1" :title="character.origin?.name">{{ character.origin?.name }}</span>
+        </p>
+        <p class="flex">
+          <span class="font-medium text-gray-700 dark:text-gray-300 flex-shrink-0">Location:</span>
+          <span class="truncate ml-1" :title="character.location?.name">{{ character.location?.name }}</span>
+        </p>
       </div>
     </div>
   </UCard>
