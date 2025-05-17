@@ -1,20 +1,19 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import tailwindcss from '@tailwindcss/vite'
+
 export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
-  postcss: {
-    plugins: {
-      '@tailwindcss/postcss': {},
-      autoprefixer: {},
-    },
+  
+  vite: {
+    plugins: [
+      tailwindcss(),
+    ],
   },
-  tailwindcss: {
-    viewer: false,
-  },
+  
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
 
   modules: [
-    // Comment out @nuxt/content temporarily to resolve build issues
     // '@nuxt/content',
     '@nuxt/eslint',
     '@nuxt/fonts',
@@ -23,5 +22,11 @@ export default defineNuxtConfig({
     '@nuxt/scripts',
     '@nuxt/test-utils',
     '@nuxt/ui'
-  ]
+  ],
+  
+  ui: {
+    // Ensure Nuxt UI is properly configured
+    global: true,
+    icons: ['heroicons']
+  }
 })
