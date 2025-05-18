@@ -28,25 +28,21 @@
 </template>
 
 <script setup lang="ts">
-// Get the composable functions and shared state
 import { getStatusColor } from '~/utils/status'
 import type { CharacterStatus } from '~/types/status'
 
 const { statusFilter, setStatusFilter } = useCharacters()
 
-// Status options with labels
 const statuses = [
   { value: 'Alive' as CharacterStatus, label: 'Alive' },
   { value: 'Dead' as CharacterStatus, label: 'Dead' },
   { value: 'unknown' as CharacterStatus, label: 'Unknown' }
 ];
 
-// Helper function to check if a status is active
 function isStatusActive(statusValue: CharacterStatus): boolean {
   return statusFilter.value === statusValue;
 }
 
-// Method to select a status
 function selectStatus(selected: CharacterStatus) {
   if (statusFilter.value === selected) {
     setStatusFilter(null);
@@ -55,7 +51,6 @@ function selectStatus(selected: CharacterStatus) {
   }
 }
 
-// Method to clear the filter
 function clearFilter() {
   setStatusFilter(null);
 }

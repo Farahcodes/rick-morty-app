@@ -5,14 +5,6 @@
     <!-- Filter Component -->
     <CharacterStatusFilter />
 
-    <!-- commented out for now - to be used as a reference for the future -->
-    <!-- <div class="flex gap-2 my-8">
-      <UBadge label="Lova le BG in solid" color="lovasoa" />
-      <UBadge label="Lova le BG in subtle" color="lovasoa" variant="subtle" />
-      <UBadge label="Lova le BG in outline" color="lovasoa" variant="outline" />
-      <UBadge label="Lova le BG in ghost" color="lovasoa" variant="soft" />
-    </div>
-
     <!-- Display Active Filter -->
     <div v-if="statusFilter" class="text-center mb-4">
       <UBadge class="text-sm" :color="getStatusColor(statusFilter)" variant="subtle">
@@ -73,7 +65,6 @@
 import { onMounted } from 'vue'
 import { getStatusColor } from '~/utils/status'
 
-// Use our character composable
 const {
   characters,
   paginationInfo,
@@ -87,28 +78,16 @@ const {
   setStatusFilter
 } = useCharacters()
 
-// Fetch initial characters on component mount
 onMounted(() => {
   if (characters.value.length === 0) {
-    loadCharacters(true); // Pass true for isInitialLoad
+    loadCharacters(true);
   }
 })
-
-function getStatusBadgeClass(status: string | null): string {
-  if (!status) return 'bg-blue-50 text-blue-600 ring-1 ring-inset ring-blue-600/10'; // Default styling
-  switch (status) {
-    case 'Alive': return 'bg-green-50 text-green-600 ring-1 ring-inset ring-green-600/10';
-    case 'Dead': return 'bg-red-50 text-red-600 ring-1 ring-inset ring-red-600/10';
-    case 'unknown': return 'bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-600/10';
-    default: return 'bg-blue-50 text-blue-600 ring-1 ring-inset ring-blue-600/10';
-  }
-}
 
 function resetFilter() {
   setStatusFilter(null);
 }
 
-// Set a descriptive page title
 useHead({
   title: 'Characters | Rick and Morty API Viewer'
 })

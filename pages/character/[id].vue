@@ -58,7 +58,6 @@
               <ul class="list-disc list-inside text-gray-700 dark:text-gray-300">
                 <li v-for="(episodeUrl, index) in character.episode" :key="index" class="hover:text-primary-500 dark:hover:text-primary-400">
                   Episode {{ episodeUrl.split('/').pop() }}
-                  <!-- Potential future enhancement: Link to episode details if API supports -->
                 </li>
               </ul>
             </div>
@@ -80,41 +79,28 @@ const characterId = computed(() => route.params.id as string)
 
 const character = ref<Character | null>(null)
 const pending = ref(true)
-const error = ref<any>(null) // Can be FetchError or other error types
+const error = ref<any>(null)
 
 const fetchCharacterDetails = async () => {
   pending.value = true
   error.value = null
-  // Do not set character.value to null here if you want to show stale data while loading new ID
-  // character.value = null 
   try {
-    // Ensure we use the latest characterId value if it changes
     const currentId = characterId.value;
     const data = await $fetch<Character>(`https://rickandmortyapi.com/api/character/${currentId}`)
-    if (characterId.value === currentId) { // check if the id is still the same after await
+    if (characterId.value === currentId) {
         character.value = data
     }
   } catch (e: any) {
     if (characterId.value === (e.response?._data?.id?.toString() || route.params.id as string) || !character.value) {
       error.value = e
-      character.value = null // Clear character on error for the current ID
+      character.value = null
     }
-    // console.error("Failed to fetch character details:", e);
   } finally {
      if (characterId.value === (character.value?.id.toString() || route.params.id as string) || error.value ){
         pending.value = false
      }
   }
 }
-
-const getStatusBadgeClass = computed(() => {
-  if (!character.value) return 'bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-600/10'
-  switch (character.value.status) {
-    case 'Alive': return 'bg-green-50 text-green-600 ring-1 ring-inset ring-green-600/10'
-    case 'Dead': return 'bg-red-50 text-red-600 ring-1 ring-inset ring-red-600/10'
-    default: return 'bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-600/10'
-  }
-})
 
 const getStatusColor = computed(() => {
   return getStatusColorHelper(character.value?.status || null)
@@ -136,31 +122,25 @@ const errorMessage = computed(() => {
   return error.value?.message || 'Could not load character details. Please try again later.'
 })
 
-// Fetch character details when the component is mounted
 onMounted(fetchCharacterDetails)
 
-// And when the characterId computed property changes
 watch(characterId, (newId, oldId) => {
   if (newId !== oldId) {
-    character.value = null; // Clear previous character data for a cleaner loading state
+    character.value = null;
     fetchCharacterDetails();
   }
 });
 
-// Update page title dynamically
 useHead(() => ({
   title: character.value ? `${character.value.name} | Character Details` : (pending.value ? 'Loading Character...' : (error.value ? 'Error' : 'Character Details'))
 }))
-
 </script>
 
 <style scoped>
-/* Add any page-specific styles here */
 .max-h-72 {
-  max-height: 18rem; /* 288px */
+  max-height: 18rem;
 }
 
-/* Styling for a better scrollbar (optional, browser-dependent) */
 .overflow-y-auto::-webkit-scrollbar {
   width: 8px;
 }

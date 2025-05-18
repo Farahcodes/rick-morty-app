@@ -66,7 +66,6 @@ const getStatusBadgeColor = computed(() => {
 </script>
 
 <style scoped>
-/* Component-specific styles can go here if Tailwind/NuxtUI isn't enough */
 .truncate {
   overflow: hidden;
   text-overflow: ellipsis;
