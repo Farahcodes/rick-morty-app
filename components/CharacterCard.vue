@@ -1,5 +1,6 @@
 <template>
-  <UCard :ui="{ body: { padding: 'px-4 py-5 sm:p-6' }, header: { padding: 'px-4 py-4 sm:px-6' }, footer: { padding: 'px-4 py-4 sm:px-6' } }">
+  <UCard
+    :ui="{ body: { padding: 'px-4 py-5 sm:p-6' }, header: { padding: 'px-4 py-4 sm:px-6' }, footer: { padding: 'px-4 py-4 sm:px-6' } }">
     <template #header>
       <div class="flex justify-between items-center">
         <h3 class="text-base sm:text-lg font-semibold truncate" :title="character.name">{{ character.name }}</h3>
@@ -11,18 +12,16 @@
 
     <div class="flex flex-col sm:flex-row gap-4 sm:gap-6">
       <div class="w-full sm:w-1/3 flex-shrink-0">
-        <NuxtImg
-          :src="character.image"
-          :alt="character.name"
-          class="w-full h-auto aspect-square object-cover rounded-lg shadow-md"
-          sizes="100vw sm:33vw md:25vw"
-          loading="lazy"
-        />
+        <NuxtImg :src="character.image" :alt="character.name"
+          class="w-full h-auto aspect-square object-cover rounded-lg shadow-md" sizes="100vw sm:33vw md:25vw"
+          loading="lazy" />
       </div>
       <div class="flex-1 space-y-1.5 text-sm overflow-hidden">
         <p>
           <span class="font-medium text-gray-700 dark:text-gray-300">Status:</span>
-          <UBadge variant="subtle" size="xs" class="ml-1" :class="getStatusBadgeClass">{{ character.status }}</UBadge>
+          <UBadge variant="subtle" size="xs" class="ml-1" :color="getStatusBadgeColor">{{ character.status
+            }}
+          </UBadge>
         </p>
         <p class="flex">
           <span class="font-medium text-gray-700 dark:text-gray-300 flex-shrink-0">Species:</span>
@@ -80,14 +79,14 @@ const props = defineProps({
   }
 })
 
-const getStatusBadgeClass = computed(() => {
+const getStatusBadgeColor = computed(() => {
   switch (props.character.status) {
     case 'Alive':
-      return 'bg-green-50 text-green-600 ring-1 ring-inset ring-green-600/10'
+      return 'success'
     case 'Dead':
-      return 'bg-red-50 text-red-600 ring-1 ring-inset ring-red-600/10'
+      return 'error'
     default:
-      return 'bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-600/10'
+      return 'lovasoa'
   }
 })
 </script>
@@ -99,4 +98,4 @@ const getStatusBadgeClass = computed(() => {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-</style> 
+</style>
