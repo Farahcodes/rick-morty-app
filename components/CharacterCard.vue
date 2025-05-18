@@ -87,7 +87,7 @@ const statusColor = computed(() => {
     case 'Dead':
       return 'red'
     default:
-      return 'primary' // Using a Nuxt UI primary color for unknown
+      return 'gray'
   }
 })
 </script>
