@@ -82,9 +82,9 @@ const props = defineProps({
 const getStatusBadgeColor = computed(() => {
   switch (props.character.status) {
     case 'Alive':
-      return 'green'
+      return 'success'
     case 'Dead':
-      return 'red'
+      return 'error'
     default:
       return 'lovasoa'
   }

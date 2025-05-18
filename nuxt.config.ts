@@ -15,7 +15,20 @@ export default defineNuxtConfig({
 
   ui: {
     theme: {
-      colors: ['green', 'red', 'lovasoa']
+      // Only those are used in nuxt-ui color: red won't work
+      colors: [
+        'primary',
+        'secondary',
+        'tertiary',
+        'info',
+        'success',
+        'warning',
+        'error',
+        'farah',
+        'pierrick',
+        'lovasoa',
+        'neutral',
+      ]
     }
   },
   modules: [

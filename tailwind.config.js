@@ -10,6 +10,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // Uesd those value in main.css I don't think tailwind.config.js is used with v4
         'green': { 
           500: '#22c55e', // Used for 'Alive' status
           50: '#f0fdf4',
@@ -20,6 +21,7 @@ module.exports = {
           50: '#fef2f2',
           600: '#dc2626'
         },
+        // Nuxt-ui uses 'neutral' color
         'gray': { 
           500: '#6b7280', // Used for 'unknown' status
           50: '#f9fafb',

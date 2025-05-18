@@ -4,7 +4,14 @@
 
     <!-- Filter Component -->
     <CharacterStatusFilter />
-    
+
+    <div class="flex gap-2 my-8">
+      <UBadge label="Lova le BG in solid" color="lovasoa" />
+      <UBadge label="Lova le BG in subtle" color="lovasoa" variant="subtle" />
+      <UBadge label="Lova le BG in outline" color="lovasoa" variant="outline" />
+      <UBadge label="Lova le BG in ghost" color="lovasoa" variant="soft" />
+    </div>
+
     <!-- Display Active Filter -->
     <div v-if="statusFilter" class="text-center mb-4">
       <UBadge class="text-sm" :class="getStatusBadgeClass(statusFilter)">
