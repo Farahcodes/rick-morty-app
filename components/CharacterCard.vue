@@ -50,6 +50,7 @@
 
 <script setup lang="ts">
 import type { PropType } from 'vue'
+import { getStatusColor } from '~/utils/status'
 
 interface Character {
   id: number
@@ -80,14 +81,7 @@ const props = defineProps({
 })
 
 const getStatusBadgeColor = computed(() => {
-  switch (props.character.status) {
-    case 'Alive':
-      return 'success'
-    case 'Dead':
-      return 'error'
-    default:
-      return 'lovasoa'
-  }
+  return getStatusColor(props.character.status)
 })
 </script>
 

@@ -15,7 +15,7 @@
 
     <!-- Display Active Filter -->
     <div v-if="statusFilter" class="text-center mb-4">
-      <UBadge class="text-sm" :class="getStatusBadgeClass(statusFilter)">
+      <UBadge class="text-sm" :color="getStatusColor(statusFilter)" variant="subtle">
         Filtered by status: {{ statusFilter }}
       </UBadge>
     </div>
@@ -71,6 +71,7 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
+import { getStatusColor } from '~/utils/status'
 
 // Use our character composable
 const {

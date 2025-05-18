@@ -29,6 +29,8 @@
 
 <script setup lang="ts">
 // Get the composable functions and shared state
+import { getStatusColor } from '~/utils/status'
+
 const { statusFilter, setStatusFilter } = useCharacters()
 
 // Status options with labels
@@ -41,18 +43,6 @@ const statuses = [
 // Helper function to check if a status is active
 function isStatusActive(statusValue: 'Alive' | 'Dead' | 'unknown'): boolean {
   return statusFilter.value === statusValue;
-}
-
-// Method to get semantic color based on status
-function getStatusColor(status: 'Alive' | 'Dead' | 'unknown') {
-  switch (status) {
-    case 'Alive':
-      return 'success'
-    case 'Dead':
-      return 'error'
-    default:
-      return 'lovasoa'
-  }
 }
 
 // Method to select a status
