@@ -73,22 +73,7 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { getStatusColor as getStatusColorHelper } from '~/utils/status'
-
-// Interface for Character details based on API response
-interface Character {
-  id: number;
-  name: string;
-  status: 'Alive' | 'Dead' | 'unknown';
-  species: string;
-  type: string;
-  gender: string;
-  origin: { name: string; url: string };
-  location: { name: string; url: string };
-  image: string;
-  episode: string[];
-  url: string;
-  created: string;
-}
+import type { Character } from '~/types/api'
 
 const route = useRoute()
 const characterId = computed(() => route.params.id as string)

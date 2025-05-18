@@ -30,23 +30,24 @@
 <script setup lang="ts">
 // Get the composable functions and shared state
 import { getStatusColor } from '~/utils/status'
+import type { CharacterStatus } from '~/types/status'
 
 const { statusFilter, setStatusFilter } = useCharacters()
 
 // Status options with labels
 const statuses = [
-  { value: 'Alive', label: 'Alive' },
-  { value: 'Dead', label: 'Dead' },
-  { value: 'unknown', label: 'Unknown' }
-] as const; // Use const assertion for stricter type on s.value
+  { value: 'Alive' as CharacterStatus, label: 'Alive' },
+  { value: 'Dead' as CharacterStatus, label: 'Dead' },
+  { value: 'unknown' as CharacterStatus, label: 'Unknown' }
+];
 
 // Helper function to check if a status is active
-function isStatusActive(statusValue: 'Alive' | 'Dead' | 'unknown'): boolean {
+function isStatusActive(statusValue: CharacterStatus): boolean {
   return statusFilter.value === statusValue;
 }
 
 // Method to select a status
-function selectStatus(selected: 'Alive' | 'Dead' | 'unknown') {
+function selectStatus(selected: CharacterStatus) {
   if (statusFilter.value === selected) {
     setStatusFilter(null);
   } else {

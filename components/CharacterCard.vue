@@ -51,27 +51,7 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
 import { getStatusColor } from '~/utils/status'
-
-interface Character {
-  id: number
-  name: string
-  status: 'Alive' | 'Dead' | 'unknown'
-  species: string
-  type?: string
-  gender: string
-  origin: {
-    name: string
-    url: string
-  }
-  location: {
-    name: string
-    url: string
-  }
-  image: string
-  episode: string[]
-  url: string
-  created: string
-}
+import type { Character } from '~/types/api'
 
 const props = defineProps({
   character: {
