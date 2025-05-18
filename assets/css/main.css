@@ -1,3 +1,17 @@
 @charset "utf-8";
 @import "tailwindcss";
 @import "@nuxt/ui";
+
+@theme static {
+  --color-lovasoa-50: #fef5fd;
+  --color-lovasoa-100: #fdeafa;
+  --color-lovasoa-200: #f9d5f4;
+  --color-lovasoa-300: #f3b4e6;
+  --color-lovasoa-400: #eb87d5;
+  --color-lovasoa-500: #d945b9;
+  --color-lovasoa-600: #c0399f;
+  --color-lovasoa-700: #9f2c81;
+  --color-lovasoa-800: #822669;
+  --color-lovasoa-900: #6b2456;
+  --color-lovasoa-950: #460c35;
+}
