@@ -5,7 +5,8 @@
     <!-- Filter Component -->
     <CharacterStatusFilter />
 
-    <div class="flex gap-2 my-8">
+    <!-- commented out for now - to be used as a reference for the future -->
+    <!-- <div class="flex gap-2 my-8">
       <UBadge label="Lova le BG in solid" color="lovasoa" />
       <UBadge label="Lova le BG in subtle" color="lovasoa" variant="subtle" />
       <UBadge label="Lova le BG in outline" color="lovasoa" variant="outline" />
