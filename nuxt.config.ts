@@ -22,11 +22,5 @@ export default defineNuxtConfig({
     '@nuxt/scripts',
     '@nuxt/test-utils',
     '@nuxt/ui'
-  ],
-  
-  ui: {
-    // Ensure Nuxt UI is properly configured
-    global: true,
-    icons: ['heroicons']
-  }
+  ]
 })
