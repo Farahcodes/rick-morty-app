@@ -7,7 +7,7 @@
     
     <!-- Display Active Filter -->
     <div v-if="statusFilter" class="text-center mb-4">
-      <UBadge :color="getStatusColor(statusFilter)" class="text-sm">
+      <UBadge class="text-sm" :class="getStatusBadgeClass(statusFilter)">
         Filtered by status: {{ statusFilter }}
       </UBadge>
     </div>
@@ -85,13 +85,13 @@ onMounted(() => {
   }
 })
 
-function getStatusColor(status: string | null): string {
-  if (!status) return 'primary'; // Default color if status is null
+function getStatusBadgeClass(status: string | null): string {
+  if (!status) return 'bg-blue-50 text-blue-600 ring-1 ring-inset ring-blue-600/10'; // Default styling
   switch (status) {
-    case 'Alive': return 'green';
-    case 'Dead': return 'red';
-    case 'unknown': return 'gray'; // Harmonized with other components
-    default: return 'primary';
+    case 'Alive': return 'bg-green-50 text-green-600 ring-1 ring-inset ring-green-600/10';
+    case 'Dead': return 'bg-red-50 text-red-600 ring-1 ring-inset ring-red-600/10';
+    case 'unknown': return 'bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-600/10';
+    default: return 'bg-blue-50 text-blue-600 ring-1 ring-inset ring-blue-600/10';
   }
 }
 

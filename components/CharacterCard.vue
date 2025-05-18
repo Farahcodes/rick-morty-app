@@ -22,7 +22,7 @@
       <div class="flex-1 space-y-1.5 text-sm overflow-hidden">
         <p>
           <span class="font-medium text-gray-700 dark:text-gray-300">Status:</span>
-          <UBadge :color="statusColor" variant="subtle" size="xs" class="ml-1">{{ character.status }}</UBadge>
+          <UBadge variant="subtle" size="xs" class="ml-1" :class="getStatusBadgeClass">{{ character.status }}</UBadge>
         </p>
         <p class="flex">
           <span class="font-medium text-gray-700 dark:text-gray-300 flex-shrink-0">Species:</span>
@@ -80,14 +80,14 @@ const props = defineProps({
   }
 })
 
-const statusColor = computed(() => {
+const getStatusBadgeClass = computed(() => {
   switch (props.character.status) {
     case 'Alive':
-      return 'green'
+      return 'bg-green-50 text-green-600 ring-1 ring-inset ring-green-600/10'
     case 'Dead':
-      return 'red'
+      return 'bg-red-50 text-red-600 ring-1 ring-inset ring-red-600/10'
     default:
-      return 'gray'
+      return 'bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-600/10'
   }
 })
 </script>

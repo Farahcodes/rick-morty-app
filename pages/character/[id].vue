@@ -35,7 +35,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
               <p>
                 <span class="font-semibold text-gray-800 dark:text-gray-200">Status:</span> 
-                <UBadge :color="statusColor" variant="subtle" size="sm" class="ml-1.5">{{ character.status }}</UBadge>
+                <UBadge variant="subtle" size="sm" class="ml-1.5" :class="getStatusBadgeClass">{{ character.status }}</UBadge>
               </p>
               <p><span class="font-semibold text-gray-800 dark:text-gray-200">Species:</span> {{ character.species }}</p>
               <p><span class="font-semibold text-gray-800 dark:text-gray-200">Gender:</span> {{ character.gender }}</p>
@@ -121,12 +121,12 @@ const fetchCharacterDetails = async () => {
   }
 }
 
-const statusColor = computed(() => {
-  if (!character.value) return 'gray'
+const getStatusBadgeClass = computed(() => {
+  if (!character.value) return 'bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-600/10'
   switch (character.value.status) {
-    case 'Alive': return 'green'
-    case 'Dead': return 'red'
-    default: return 'primary' // Using Nuxt UI primary color
+    case 'Alive': return 'bg-green-50 text-green-600 ring-1 ring-inset ring-green-600/10'
+    case 'Dead': return 'bg-red-50 text-red-600 ring-1 ring-inset ring-red-600/10'
+    default: return 'bg-gray-50 text-gray-600 ring-1 ring-inset ring-gray-600/10'
   }
 })
 
