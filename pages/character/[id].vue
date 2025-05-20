@@ -11,7 +11,7 @@
     <UAlert
       v-if="error && !character"
       icon="i-heroicons-exclamation-triangle-solid"
-      color="red"
+      color="error"
       variant="soft"
       :title="errorTitle"
       :description="errorMessage"
@@ -20,7 +20,12 @@
 
     <div v-if="character">
       <UTitle class="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-8">{{ character.name }}</UTitle>
-      <UCard :ui="{ base: 'overflow-hidden', body: { padding: 'sm:p-6' }, header: { padding: 'sm:px-6 sm:py-5' }, footer: { padding: 'sm:px-6 sm:py-5' } }">
+      <UCard :ui="{
+        root: 'overflow-hidden',
+        header: 'p-4 sm:px-6 sm:py-5',
+        body: 'p-4 sm:p-6',
+        footer: 'p-4 sm:px-6 sm:py-5'
+      }">
         <div class="flex flex-col md:flex-row md:gap-8">
           <div class="md:w-1/3 mb-6 md:mb-0 flex-shrink-0">
             <NuxtImg 
@@ -73,13 +78,14 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { getStatusColor as getStatusColorHelper } from '~/utils/status'
 import type { Character } from '~/types/api'
+import type { FetchError } from 'ofetch'
 
 const route = useRoute()
 const characterId = computed(() => route.params.id as string)
 
 const character = ref<Character | null>(null)
 const pending = ref(true)
-const error = ref<any>(null)
+const error = ref<FetchError | Error | null>(null)
 
 const fetchCharacterDetails = async () => {
   pending.value = true
@@ -90,10 +96,21 @@ const fetchCharacterDetails = async () => {
     if (characterId.value === currentId) {
         character.value = data
     }
-  } catch (e: any) {
-    if (characterId.value === (e.response?._data?.id?.toString() || route.params.id as string) || !character.value) {
-      error.value = e
-      character.value = null
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      if ('response' in e && (e as FetchError).response?._data) {
+        const fetchError = e as FetchError;
+        if (characterId.value === (fetchError.response?._data?.id?.toString() || route.params.id as string) || !character.value) {
+          error.value = fetchError;
+          character.value = null;
+        }
+      } else {
+        error.value = e;
+        character.value = null;
+      }
+    } else {
+      error.value = new Error('An unknown error occurred');
+      character.value = null;
     }
   } finally {
      if (characterId.value === (character.value?.id.toString() || route.params.id as string) || error.value ){
@@ -108,7 +125,10 @@ const getStatusColor = computed(() => {
 
 const errorTitle = computed(() => {
   const id = characterId.value;
-  if (error.value?.data?.error === 'Character not found' || error.value?.statusCode === 404) {
+  if (error.value && 'data' in error.value && (error.value as FetchError).data?.error === 'Character not found') {
+    return `Character with ID ${id} Not Found`
+  }
+  if (error.value && 'statusCode' in error.value && (error.value as FetchError).statusCode === 404) {
     return `Character with ID ${id} Not Found`
   }
   return 'Error Fetching Character'
@@ -116,7 +136,10 @@ const errorTitle = computed(() => {
 
 const errorMessage = computed(() => {
   const id = characterId.value;
-  if (error.value?.data?.error === 'Character not found' || error.value?.statusCode === 404) {
+  if (error.value && 'data' in error.value && (error.value as FetchError).data?.error === 'Character not found') {
+    return `The character you are looking for (ID: ${id}) does not exist. Please check the ID or go back to the character list.`
+  }
+  if (error.value && 'statusCode' in error.value && (error.value as FetchError).statusCode === 404) {
     return `The character you are looking for (ID: ${id}) does not exist. Please check the ID or go back to the character list.`
   }
   return error.value?.message || 'Could not load character details. Please try again later.'

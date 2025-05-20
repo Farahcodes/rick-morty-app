@@ -1,6 +1,10 @@
 <template>
   <UCard
-    :ui="{ body: { padding: 'px-4 py-5 sm:p-6' }, header: { padding: 'px-4 py-4 sm:px-6' }, footer: { padding: 'px-4 py-4 sm:px-6' } }">
+    :ui="{
+      header: 'p-4 sm:px-6',
+      body: 'px-4 py-5 sm:p-6',
+      footer: 'p-4 sm:px-6'
+    }">
     <template #header>
       <div class="flex justify-between items-center">
         <h3 class="text-base sm:text-lg font-semibold truncate" :title="character.name">{{ character.name }}</h3>

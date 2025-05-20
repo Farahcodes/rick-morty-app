@@ -21,7 +21,7 @@
     <UAlert
       v-if="error && !characters.length && !pending"
       icon="i-heroicons-exclamation-triangle"
-      color="red"
+      color="error"
       variant="soft"
       title="Error fetching characters"
       :description="error.message || 'Could not load character data. Please try again later.'"
@@ -46,7 +46,7 @@
     <UAlert
       v-if="errorMore"
       icon="i-heroicons-exclamation-triangle"
-      color="red"
+      color="error"
       variant="soft"
       title="Error fetching more characters"
       :description="errorMore.message || 'Could not load more character data. Please try again later.'"
