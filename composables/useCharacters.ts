@@ -1,25 +1,43 @@
 import type { Character, PaginationInfo } from '~/types/api'
 import { fetchCharacters } from '~/utils/api'
+import type { FetchError } from 'ofetch'
+import type { CharacterStatus } from '~/types/status'
 
 export function useCharacters() {
-  const characters = ref<Character[]>([])
-  const paginationInfo = ref<PaginationInfo | null>(null)
-  const pending = ref(true)
-  const error = ref<Error | null>(null)
+  const characters = useState<Character[]>('characters', () => [])
+  const paginationInfo = useState<PaginationInfo | null>('paginationInfo', () => null)
+  const pending = useState<boolean>('charactersPending', () => false)
+  const error = useState<FetchError | Error | null>('charactersError', () => null)
+  const pendingMore = useState<boolean>('charactersPendingMore', () => false)
+  const errorMore = useState<FetchError | Error | null>('charactersErrorMore', () => null)
+  const statusFilter = useState<CharacterStatus | null>('charactersStatusFilter', () => null)
 
-  const pendingMore = ref(false)
-  const errorMore = ref<Error | null>(null)
+  async function loadCharacters(isInitialLoad = false) {
+    if (import.meta.server && !isInitialLoad) {
+      return
+    }
 
-  async function loadCharacters() {
     pending.value = true
     error.value = null
-    
+    if (!isInitialLoad || characters.value.length === 0) {
+        characters.value = []
+    }
+
     try {
-      const { results, pagination } = await fetchCharacters()
-      characters.value = results
-      paginationInfo.value = pagination
-    } catch (e: any) {
-      error.value = e
+      const currentFilterValue = statusFilter.value
+      const filters = currentFilterValue ? { status: currentFilterValue } : undefined
+      
+      const response = await fetchCharacters(undefined, filters)
+      
+      characters.value = response.results
+      paginationInfo.value = response.pagination
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        error.value = e as FetchError | Error
+      } else {
+        error.value = new Error('An unknown error occurred during loadCharacters')
+      }
+      console.error('Composable: Error loading characters:', e)
     } finally {
       pending.value = false
     }
@@ -30,18 +48,36 @@ export function useCharacters() {
 
     pendingMore.value = true
     errorMore.value = null
-    
     try {
-      const { results, pagination } = await fetchCharacters(paginationInfo.value.next)
-      characters.value.push(...results)
-      paginationInfo.value = pagination
-    } catch (e: any) {
-      errorMore.value = e
+      const response = await fetchCharacters(paginationInfo.value.next)
+      characters.value.push(...response.results)
+      paginationInfo.value = response.pagination
+    } catch (e: unknown) {
+       if (e instanceof Error) {
+        errorMore.value = e as FetchError | Error
+      } else {
+        errorMore.value = new Error('An unknown error occurred during loadMoreCharacters')
+      }
+      console.error('Composable: Error loading more characters:', e)
     } finally {
       pendingMore.value = false
     }
   }
 
+  function setStatusFilter(newStatus: CharacterStatus | null) {
+    if (statusFilter.value !== newStatus) {
+      statusFilter.value = newStatus
+    } else if (newStatus === null && statusFilter.value === null) {
+      loadCharacters()
+    }
+  }
+
+  if (import.meta.client) {
+    watch(statusFilter, (_newValue, _oldValue) => {
+      loadCharacters()
+    }, { immediate: false })
+  }
+  
   return {
     characters,
     paginationInfo,
@@ -49,7 +85,9 @@ export function useCharacters() {
     error,
     pendingMore,
     errorMore,
+    statusFilter,
     loadCharacters,
     loadMoreCharacters,
+    setStatusFilter,
   }
 } 

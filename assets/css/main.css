@@ -1,3 +1,41 @@
 @charset "utf-8";
 @import "tailwindcss";
 @import "@nuxt/ui";
+
+@theme static {
+  --color-lovasoa-50: #fef5fd;
+  --color-lovasoa-100: #fdeafa;
+  --color-lovasoa-200: #f9d5f4;
+  --color-lovasoa-300: #f3b4e6;
+  --color-lovasoa-400: #eb87d5;
+  --color-lovasoa-500: #d945b9;
+  --color-lovasoa-600: #c0399f;
+  --color-lovasoa-700: #9f2c81;
+  --color-lovasoa-800: #822669;
+  --color-lovasoa-900: #6b2456;
+  --color-lovasoa-950: #460c35;
+
+  --color-farah-50: #f0fdf5;
+  --color-farah-100: #dcfce8;
+  --color-farah-200: #bbf7d1;
+  --color-farah-300: #86efad;
+  --color-farah-400: #4ade80;
+  --color-farah-500: #22c55e;
+  --color-farah-600: #16a34a;
+  --color-farah-700: #15803c;
+  --color-farah-800: #166533;
+  --color-farah-900: #14532b;
+  --color-farah-950: #052e14;
+
+  --color-pierrick-50: #fef2f2;
+  --color-pierrick-100: #fee2e2;
+  --color-pierrick-200: #fecaca;
+  --color-pierrick-300: #fca5a5;
+  --color-pierrick-400: #f87171;
+  --color-pierrick-500: #ef4444;
+  --color-pierrick-600: #dc2626;
+  --color-pierrick-700: #b91c1c;
+  --color-pierrick-800: #991b1b;
+  --color-pierrick-900: #7f1d1d;
+  --color-pierrick-950: #450a0a;
+}

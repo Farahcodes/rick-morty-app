@@ -1,5 +1,10 @@
 <template>
-  <UCard :ui="{ body: { padding: 'px-4 py-5 sm:p-6' }, header: { padding: 'px-4 py-4 sm:px-6' }, footer: { padding: 'px-4 py-4 sm:px-6' } }">
+  <UCard
+    :ui="{
+      header: 'p-4 sm:px-6',
+      body: 'px-4 py-5 sm:p-6',
+      footer: 'p-4 sm:px-6'
+    }">
     <template #header>
       <div class="flex justify-between items-center">
         <h3 class="text-base sm:text-lg font-semibold truncate" :title="character.name">{{ character.name }}</h3>
@@ -11,18 +16,16 @@
 
     <div class="flex flex-col sm:flex-row gap-4 sm:gap-6">
       <div class="w-full sm:w-1/3 flex-shrink-0">
-        <NuxtImg
-          :src="character.image"
-          :alt="character.name"
-          class="w-full h-auto aspect-square object-cover rounded-lg shadow-md"
-          sizes="100vw sm:33vw md:25vw"
-          loading="lazy"
-        />
+        <NuxtImg :src="character.image" :alt="character.name"
+          class="w-full h-auto aspect-square object-cover rounded-lg shadow-md" sizes="100vw sm:33vw md:25vw"
+          loading="lazy" />
       </div>
       <div class="flex-1 space-y-1.5 text-sm overflow-hidden">
         <p>
           <span class="font-medium text-gray-700 dark:text-gray-300">Status:</span>
-          <UBadge :color="statusColor" variant="subtle" size="xs" class="ml-1">{{ character.status }}</UBadge>
+          <UBadge variant="subtle" size="xs" class="ml-1" :color="getStatusBadgeColor">{{ character.status
+            }}
+          </UBadge>
         </p>
         <p class="flex">
           <span class="font-medium text-gray-700 dark:text-gray-300 flex-shrink-0">Species:</span>
@@ -51,27 +54,8 @@
 
 <script setup lang="ts">
 import type { PropType } from 'vue'
-
-interface Character {
-  id: number
-  name: string
-  status: 'Alive' | 'Dead' | 'unknown'
-  species: string
-  type?: string
-  gender: string
-  origin: {
-    name: string
-    url: string
-  }
-  location: {
-    name: string
-    url: string
-  }
-  image: string
-  episode: string[]
-  url: string
-  created: string
-}
+import { getStatusColor } from '~/utils/status'
+import type { Character } from '~/types/api'
 
 const props = defineProps({
   character: {
@@ -80,23 +64,15 @@ const props = defineProps({
   }
 })
 
-const statusColor = computed(() => {
-  switch (props.character.status) {
-    case 'Alive':
-      return 'green'
-    case 'Dead':
-      return 'red'
-    default:
-      return 'primary' // Using a Nuxt UI primary color for unknown
-  }
+const getStatusBadgeColor = computed(() => {
+  return getStatusColor(props.character.status)
 })
 </script>
 
 <style scoped>
-/* Component-specific styles can go here if Tailwind/NuxtUI isn't enough */
 .truncate {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-</style> 
+</style>
