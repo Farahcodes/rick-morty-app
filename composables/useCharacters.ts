@@ -19,10 +19,6 @@ export function useCharacters() {
 
     pending.value = true
     error.value = null
-    if (!isInitialLoad || characters.value.length === 0) {
-        characters.value = []
-    }
-
     try {
       const currentFilterValue = statusFilter.value
       const filters = currentFilterValue ? { status: currentFilterValue } : undefined

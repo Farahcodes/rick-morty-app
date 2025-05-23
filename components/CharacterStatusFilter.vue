@@ -9,6 +9,7 @@
           :color="getStatusColor(s.value)"
           size="sm"
           @click="selectStatus(s.value)"
+          :disabled="pending"
         >
           <span>{{ s.label }}</span>
           <span v-if="isStatusActive(s.value)" class="ml-1">✓</span>
@@ -19,6 +20,7 @@
           size="sm"
           @click="clearFilter"
           v-if="statusFilter !== null"
+          :disabled="pending"
         >
           Clear Filter
         </UButton>
@@ -31,7 +33,7 @@
 import { getStatusColor } from '~/utils/status'
 import type { CharacterStatus } from '~/types/status'
 
-const { statusFilter, setStatusFilter } = useCharacters()
+const { statusFilter, setStatusFilter, pending } = useCharacters()
 
 const statuses = [
   { value: 'Alive' as CharacterStatus, label: 'Alive' },
