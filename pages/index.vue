@@ -13,8 +13,8 @@
     </div>
 
     <!-- Loading Indicator -->
-    <div v-if="pending" class="flex justify-center my-8">
-      <UProgress animation="carousel" />
+    <div v-if="pending" class="flex justify-center items-center my-4 h-10"> 
+      <UIcon name="i-heroicons-arrow-path" class="animate-spin text-2xl text-primary" />
     </div>
 
     <!-- Initial Load Error -->
@@ -29,7 +29,7 @@
     />
 
     <!-- Character Grid -->
-    <div v-if="!pending && characters.length" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div v-if="characters.length" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       <CharacterCard
         v-for="character in characters"
         :key="character.id" 
